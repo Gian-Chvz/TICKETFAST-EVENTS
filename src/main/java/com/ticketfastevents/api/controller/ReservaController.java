@@ -5,12 +5,17 @@ import com.ticketfastevents.api.dto.ReservaResponse;
 import com.ticketfastevents.api.model.Reserva;
 import com.ticketfastevents.api.service.ReservaService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "5. Reservas Temporales (Redis)", description = "Bloqueo atómico temporal de asientos por 10 minutos (Requiere Autenticación)")
+@SecurityRequirement(name = "BearerAuth")
 @RestController
 @RequestMapping("/api/reservas")
 public class ReservaController {
@@ -21,6 +26,7 @@ public class ReservaController {
         this.reservaService = reservaService;
     }
 
+    @Operation(summary = "Bloquear temporalmente un asiento en Redis")
     @PostMapping
     public ResponseEntity<ReservaResponse> reservar(
             @Valid @RequestBody ReservaRequest request
@@ -40,6 +46,7 @@ public class ReservaController {
                 .body(response);
     }
 
+    @Operation(summary = "Liberar bloqueo temporal de asiento mediante token")
     @DeleteMapping
     public ResponseEntity<Void> liberarReserva(
             @RequestParam String eventoId,

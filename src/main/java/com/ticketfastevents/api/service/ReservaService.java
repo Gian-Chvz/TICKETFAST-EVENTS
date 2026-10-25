@@ -1,9 +1,11 @@
 package com.ticketfastevents.api.service;
 
+import com.ticketfastevents.api.model.Entrada;
 import com.ticketfastevents.api.model.Evento;
 import com.ticketfastevents.api.model.EventoEntrada;
 import com.ticketfastevents.api.model.Reserva;
 import com.ticketfastevents.api.model.Sede;
+import com.ticketfastevents.api.repository.EntradaRepository;
 import com.ticketfastevents.api.repository.EventoEntradaRepository;
 import com.ticketfastevents.api.repository.EventoRepository;
 import com.ticketfastevents.api.repository.SedeRepository;
@@ -19,6 +21,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -35,19 +38,22 @@ public class ReservaService {
     private final EventoRepository eventoRepository;
     private final SedeRepository sedeRepository;
     private final EventoEntradaRepository eventoEntradaRepository;
+    private final EntradaRepository entradaRepository;
 
     public ReservaService(
             StringRedisTemplate redisTemplate,
             EventoRepository eventoRepository,
             SedeRepository sedeRepository,
             EventoEntradaRepository eventoEntradaRepository,
-            UsuarioRepository usuarioRepository
+            UsuarioRepository usuarioRepository,
+            EntradaRepository entradaRepository
     ) {
         this.redisTemplate = redisTemplate;
         this.eventoRepository = eventoRepository;
         this.sedeRepository = sedeRepository;
         this.eventoEntradaRepository = eventoEntradaRepository;
         this.usuarioRepository = usuarioRepository;
+        this.entradaRepository = entradaRepository;
     }
 
     public Reserva reservar(
@@ -134,7 +140,24 @@ public class ReservaService {
             );
         }
 
-        // 7. Intentar bloquear el asiento atómicamente en Redis.
+        // 7. Verificar que el asiento no haya sido vendido de forma definitiva.
+        boolean yaVendido = entradaRepository
+                .existsByEventoIdAndSedeIdAndCodigoZonaAndCodigoAsientoAndEstadoIn(
+                        eventoId,
+                        sedeId,
+                        codigoZona,
+                        codigoAsiento,
+                        List.of(Entrada.EstadoEntrada.EMITIDA, Entrada.EstadoEntrada.UTILIZADA)
+                );
+
+        if (yaVendido) {
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT,
+                    "El asiento ya ha sido vendido de forma definitiva"
+            );
+        }
+
+        // 8. Intentar bloquear el asiento atómicamente en Redis.
         String clave = construirClave(
                 eventoId,
                 sedeId,
@@ -213,6 +236,29 @@ public class ReservaService {
                     "La reserva no existe, expiró o el token no coincide"
             );
         }
+    }
+
+    public boolean validarReservaActiva(
+            String eventoId,
+            String sedeId,
+            String codigoZona,
+            String codigoAsiento,
+            String tokenReserva
+    ) {
+        if (eventoId == null || sedeId == null || codigoZona == null
+                || codigoAsiento == null || tokenReserva == null) {
+            return false;
+        }
+
+        String clave = construirClave(
+                eventoId,
+                sedeId,
+                codigoZona,
+                codigoAsiento
+        );
+
+        String tokenActual = redisTemplate.opsForValue().get(clave);
+        return tokenActual != null && tokenActual.equals(tokenReserva);
     }
 
     private String construirClave(
