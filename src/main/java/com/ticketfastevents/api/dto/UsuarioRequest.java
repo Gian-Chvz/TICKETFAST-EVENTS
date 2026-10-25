@@ -19,6 +19,12 @@ public record UsuarioRequest(
         @Size(max = 150)
         String correo,
 
+        @NotBlank(message = "La contraseña es obligatoria")
+        @Size(min = 6, message = "La contraseña debe tener al menos 6 caracteres")
+        String password,
+
         @Size(max = 20)
-        String telefono
+        String telefono,
+
+        String rol
 ) {}

@@ -8,6 +8,7 @@ public record UsuarioResponse(
         String apellidos,
         String correo,
         String telefono,
+        String rol,
         Instant fechaRegistro,
         boolean activo
 ) {}

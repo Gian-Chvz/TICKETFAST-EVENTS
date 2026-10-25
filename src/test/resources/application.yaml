@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: ticketfast-api-test
+
+  mongodb:
+    uri: mongodb://localhost:27017/ticketfast_test_db
+    database: ticketfast_test_db
+
+  data:
+    redis:
+      url: redis://localhost:6379
+
+server:
+  port: 8080

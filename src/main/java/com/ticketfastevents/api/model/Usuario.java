@@ -28,7 +28,12 @@ public class Usuario {
     @Indexed(unique = true)
     private String correo;
 
+    private String password;
+
     private String telefono;
+
+    @Builder.Default
+    private String rol = "ROLE_CLIENTE";
 
     @Builder.Default
     private Instant fechaRegistro = Instant.now();
