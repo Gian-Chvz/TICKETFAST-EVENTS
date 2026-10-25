@@ -4,7 +4,7 @@ Backend de alto rendimiento para la gestión de eventos, sedes, reservas tempora
 
 ---
 
-## 📋 Tabla de Contenidos
+## Tabla de Contenidos
 
 1. [Descripción y Propósito](#-descripción-y-propósito)
 2. [Arquitectura y Stack Tecnológico](#-arquitectura-y-stack-tecnológico)
@@ -23,7 +23,7 @@ Backend de alto rendimiento para la gestión de eventos, sedes, reservas tempora
 
 ---
 
-## 🎯 Descripción y Propósito
+## Descripción y Propósito
 
 **TicketFast API** resuelve el problema crítico de la venta masiva de entradas: la prevención estricta del **overbooking** (sobreventa de asientos) en momentos de alta concurrencia.
 
@@ -36,7 +36,7 @@ Backend de alto rendimiento para la gestión de eventos, sedes, reservas tempora
 
 ---
 
-## 🚀 Arquitectura y Stack Tecnológico
+## Arquitectura y Stack Tecnológico
 
 - **Lenguaje:** Java 21 (LTS)
 - **Framework Principal:** Spring Boot 3.5.x
@@ -50,7 +50,7 @@ Backend de alto rendimiento para la gestión de eventos, sedes, reservas tempora
 
 ---
 
-## 🗄️ Modelo de Datos NoSQL
+## Modelo de Datos NoSQL
 
 ### Persistencia en MongoDB
 
@@ -109,7 +109,7 @@ El modelo de MongoDB aprovecha la flexibilidad del esquema y los documentos embe
 
 ---
 
-## 🔐 Seguridad y Control de Acceso (RBAC + JWT)
+## Seguridad y Control de Acceso (RBAC + JWT)
 
 El sistema utiliza una arquitectura de seguridad **Stateless** basada en Spring Security y tokens JWT:
 
@@ -199,11 +199,11 @@ La aplicación iniciará en `http://localhost:8080`.
 
 ---
 
-## 📦 Datos Precargados (Data Seeding)
+## Datos Precargados (Data Seeding)
 
 Al iniciar el backend por primera vez, el componente `DataInitializer` verifica y precarga automáticamente la base de datos con las siguientes credenciales y entidades de prueba para agilizar la evaluación:
 
-### 👤 Usuarios de Prueba:
+### Usuarios de Prueba:
 - **Administrador:**
   - **Correo:** `admin@ticketfast.com`
   - **Contraseña:** `Admin123!`
@@ -220,7 +220,7 @@ Al iniciar el backend por primera vez, el componente `DataInitializer` verifica 
 
 ---
 
-## 📖 Documentación Interactiva (Swagger UI)
+## Documentación Interactiva (Swagger UI)
 
 La API cuenta con documentación interactiva completa generada con OpenAPI:
 
@@ -295,7 +295,7 @@ La API cuenta con documentación interactiva completa generada con OpenAPI:
 
 ---
 
-## 🔄 Flujo Completo de Compra (Paso a Paso)
+## Flujo Completo de Compra (Paso a Paso)
 
 A continuación se describe la secuencia transaccional completa para adquirir una entrada:
 
@@ -319,7 +319,7 @@ A continuación se describe la secuencia transaccional completa para adquirir un
 
 ---
 
-## 📂 Estructura del Proyecto
+## Estructura del Proyecto
 
 ```
 ticketfast-api/
@@ -352,7 +352,7 @@ ticketfast-api/
 
 ---
 
-## ⚠️ Manejo de Errores
+## Manejo de Errores
 
 La API utiliza un controlador de excepciones global (`GlobalExceptionHandler`) que formatea las respuestas de error en un formato JSON estándar y descriptivo:
 
