@@ -1,4 +1,4 @@
-# TicketFast API 🎫⚡
+# TicketFast API
 
 Backend de alto rendimiento para la gestión de eventos, sedes, reservas temporales de asientos de alta concurrencia y venta de entradas. Implementa una **arquitectura híbrida NoSQL** combinando la persistencia de documentos en **MongoDB** con la velocidad y bloqueos atómicos en memoria de **Redis**.
 
