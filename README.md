@@ -138,7 +138,7 @@ El sistema utiliza una arquitectura de seguridad **Stateless** basada en Spring 
 
 ---
 
-## ⚙️ Requisitos Previos y Variables de Entorno
+## Requisitos Previos y Variables de Entorno
 
 ### Requisitos del Sistema:
 - **Java Development Kit (JDK):** Versión 21 o superior.
@@ -155,7 +155,7 @@ El sistema utiliza una arquitectura de seguridad **Stateless** basada en Spring 
 
 ---
 
-## 🛠️ Instalación, Compilación y Ejecución
+## Instalación, Compilación y Ejecución
 
 ### 1. Clonar el repositorio
 ```bash
